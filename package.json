@@ -38,7 +38,8 @@
     "electron:prop": "cross-env IS_DEV=false electron .",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "build:install": "electron-builder"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
@@ -85,6 +86,7 @@
     "cz-git": "^1.6.1",
     "czg": "^1.6.1",
     "electron": "25.0.1",
+    "electron-builder": "^23.6.0",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
