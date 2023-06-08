@@ -1,9 +1,17 @@
+<!--
+ * @Author: undercurre undercurre@163.com
+ * @Date: 2023-06-07 23:14:13
+ * @LastEditors: undercurre undercurre@163.com
+ * @LastEditTime: 2023-06-08 23:50:27
+ * @FilePath: \homfix\src\layouts\LayoutColumns\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <!-- 分栏布局 -->
 <template>
   <el-container class="layout">
     <div class="aside-split">
       <div class="logo flx-center">
-        <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" />
+        <img class="logo-img" src="@/assets/images/logo.png" alt="logo" />
       </div>
       <el-scrollbar>
         <div class="split-list">
@@ -24,7 +32,7 @@
     </div>
     <el-aside :class="{ 'not-aside': !subMenuList.length }" :style="{ width: isCollapse ? '65px' : '210px' }">
       <div class="logo flx-center">
-        <span v-show="subMenuList.length" class="logo-text">{{ isCollapse ? "G" : "Geeker Admin" }}</span>
+        <span v-show="subMenuList.length" class="logo-text">{{ isCollapse ? "F" : "HomFix" }}</span>
       </div>
       <el-scrollbar>
         <el-menu

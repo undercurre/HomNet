@@ -6,7 +6,7 @@
   "main": "src/electron/main.js",
   "description": "management system for fix network of native",
   "author": {
-    "name": "Geeker",
+    "name": "lirh42",
     "email": "848130454@qq.com",
     "url": "https://github.com/HalseySpicy"
   },

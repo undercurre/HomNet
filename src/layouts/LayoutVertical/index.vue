@@ -4,8 +4,8 @@
     <el-aside>
       <div class="aside-box" :style="{ width: isCollapse ? '65px' : '210px' }">
         <div class="logo flx-center">
-          <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" />
-          <span v-show="!isCollapse" class="logo-text">Geeker Admin</span>
+          <img class="logo-img" src="@/assets/images/logo.png" alt="logo" />
+          <span v-show="!isCollapse" class="logo-text">HomFix</span>
         </div>
         <el-scrollbar>
           <el-menu
