@@ -3,12 +3,12 @@
   <div class="malefemaleRatio-main">
     <div class="malefemaleRatio-header">
       <div class="man">
-        <span>男士</span>
-        <img src="../images/man.png" alt="" />
+        <span>在线</span>
+        <img src="../images/online.png" alt="" />
       </div>
       <div class="woman">
-        <span>女士</span>
-        <img src="../images/woman.png" alt="" />
+        <span>离线</span>
+        <img src="../images/outline.png" alt="" />
       </div>
     </div>
     <!-- echarts -->
@@ -40,7 +40,7 @@ const initChart = (data: ChartProp): ECharts => {
       {
         type: "category",
         position: "left",
-        data: ["男生"],
+        data: ["在线"],
         axisTick: {
           show: false
         },
@@ -54,7 +54,7 @@ const initChart = (data: ChartProp): ECharts => {
       {
         type: "category",
         position: "right",
-        data: ["女士"],
+        data: ["离线"],
         axisTick: {
           show: false
         },
@@ -96,7 +96,7 @@ const initChart = (data: ChartProp): ECharts => {
           offset: [0, -20],
           fontSize: 12,
           formatter: () => {
-            return `男士 ${data.man * 100}%`;
+            return `在线 ${data.man * 100}%`;
           }
         }
       },
@@ -116,7 +116,7 @@ const initChart = (data: ChartProp): ECharts => {
           offset: [0, -20],
           fontSize: 12,
           formatter: () => {
-            return `女士 ${data.woman * 100}%`;
+            return `离线 ${data.woman * 100}%`;
           }
         }
       }

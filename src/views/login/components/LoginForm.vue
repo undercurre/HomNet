@@ -83,7 +83,7 @@ const login = (formEl: FormInstance | undefined) => {
       router.push(HOME_URL);
       ElNotification({
         title: getTimeState(),
-        message: "欢迎登录 HomFix",
+        message: "欢迎登录 HomNet",
         type: "success",
         duration: 3000
       });

@@ -7,12 +7,11 @@
         </div>
         <div class="header-ct">
           <div class="header-ct-title">
-            <span>智慧旅游可视化大数据展示平台</span>
-            <div class="header-ct-warning">平台高峰预警信息（2条）</div>
+            <span>智慧空间可视化大数据展示平台</span>
+            <div class="header-ct-warning">局域网连接状态正常</div>
           </div>
         </div>
         <div class="header-rg">
-          <span class="header-download">统计报告</span>
           <span class="header-time">当前时间：{{ time }}</span>
         </div>
       </div>
@@ -20,7 +19,7 @@
         <div class="dataScreen-lf">
           <div class="dataScreen-top">
             <div class="dataScreen-main-title">
-              <span>实时游客统计</span>
+              <span>实时设备统计</span>
               <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
@@ -30,7 +29,7 @@
           </div>
           <div class="dataScreen-center">
             <div class="dataScreen-main-title">
-              <span>男女比例</span>
+              <span>在线比例</span>
               <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
@@ -40,7 +39,7 @@
           </div>
           <div class="dataScreen-bottom">
             <div class="dataScreen-main-title">
-              <span>年龄比例</span>
+              <span>类型比例</span>
               <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
@@ -51,7 +50,7 @@
         </div>
         <div class="dataScreen-ct">
           <div class="dataScreen-map">
-            <div class="dataScreen-map-title">景区实时客流量</div>
+            <div class="dataScreen-map-title">当前环境的网络环境</div>
             <!-- <vue3-seamless-scroll
 							:list="alarmData"
 							class="dataScreen-alarm"
@@ -66,11 +65,12 @@
 								</div>
 							</div>
 						</vue3-seamless-scroll> -->
-            <mapChart ref="MapChartRef" />
+            <!-- <mapChart ref="MapChartRef" /> -->
+            <radar></radar>
           </div>
           <div class="dataScreen-cb">
             <div class="dataScreen-main-title">
-              <span>未来30天游客量趋势图</span>
+              <span>数据流量趋势图</span>
               <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
@@ -82,7 +82,7 @@
         <div class="dataScreen-rg">
           <div class="dataScreen-top">
             <div class="dataScreen-main-title">
-              <span>热门景区排行</span>
+              <span>设备使用率排行</span>
               <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
@@ -92,7 +92,7 @@
           </div>
           <div class="dataScreen-center">
             <div class="dataScreen-main-title">
-              <span>年度游客量对比</span>
+              <span>年度设备使用量对比</span>
               <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
@@ -102,7 +102,7 @@
           </div>
           <div class="dataScreen-bottom">
             <div class="dataScreen-main-title">
-              <span>预约渠道数据统计</span>
+              <span>平台使用统计</span>
               <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
@@ -123,7 +123,8 @@ import { randomNum } from "@/utils";
 import { useRouter } from "vue-router";
 import { useTime } from "@/hooks/useTime";
 import { ECharts } from "echarts";
-import mapChart from "./components/chinaMapChart.vue";
+// import mapChart from "./components/chinaMapChart.vue";
+import radar from "./components/radar.vue";
 import AgeRatioChart from "./components/AgeRatioChart.vue";
 import AnnualUseChart from "./components/AnnualUseChart.vue";
 import HotPlateChart from "./components/HotPlateChart.vue";
@@ -198,81 +199,81 @@ const MapChartRef = ref<ChartExpose>();
 let ageData = [
   {
     value: 200,
-    name: "10岁以下",
+    name: "传感器",
     percentage: "16%"
   },
   {
     value: 110,
-    name: "10 - 18岁",
+    name: "照明灯具",
     percentage: "8%"
   },
   {
     value: 150,
-    name: "18 - 30岁",
+    name: "吊顶电器",
     percentage: "12%"
   },
   {
     value: 310,
-    name: "30 - 40岁",
+    name: "中枢/开关",
     percentage: "24%"
   },
   {
     value: 250,
-    name: "40 - 60岁",
+    name: "空气处理",
     percentage: "20%"
   },
   {
     value: 260,
-    name: "60岁以上",
+    name: "家居安防",
     percentage: "20%"
   }
 ];
 let hotData = [
   {
-    value: 79999,
-    name: "峨眉山",
+    value: 79,
+    name: "玄关灯",
     percentage: "80%",
-    maxValue: 100000
+    maxValue: 100
   },
   {
-    value: 59999,
-    name: "稻城亚丁",
+    value: 59,
+    name: "走廊灯",
     percentage: "60%",
-    maxValue: 100000
+    maxValue: 100
   },
   {
-    value: 49999,
-    name: "九寨沟",
+    value: 49,
+    name: "空调",
     percentage: "50%",
-    maxValue: 100000
+    maxValue: 100
   },
   {
-    value: 39999,
-    name: "万里长城",
+    value: 39,
+    name: "地暖",
     percentage: "40%",
-    maxValue: 100000
+    maxValue: 100
   },
   {
-    value: 29999,
-    name: "北京故宫",
+    value: 19,
+    name: "洗衣机",
     percentage: "30%",
-    maxValue: 100000
+    maxValue: 100
   }
 ];
 let platFromData = [
   {
     value: 40,
-    name: "智慧文旅平台",
+    name: "美居",
     percentage: "40%"
   },
   {
     value: 10,
-    name: "携程",
+    name: "homlux",
     percentage: "10%"
   },
   {
     value: 20,
-    name: "飞猪",
+    name: "homnet",
     percentage: "20%"
   },
   {

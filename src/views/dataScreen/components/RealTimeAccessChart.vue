@@ -1,12 +1,12 @@
 <template>
   <!-- 实时访问 -->
   <div class="actual-total">
-    <div class="expect-total">可预约总量<i>999999</i>人</div>
+    <div class="expect-total">可上线<i>999999</i>个</div>
     <div class="actual-total">
       <div v-for="(item, index) in actualTotal.split('')" :key="index" class="actual-item">
         {{ item }}
       </div>
-      <div class="actual-item">人</div>
+      <div class="actual-item">个</div>
     </div>
   </div>
   <div id="RealTimeAccessChart" class="echarts"></div>
@@ -40,7 +40,7 @@ const initChart = (data: number = 1): ECharts => {
         }
       },
       {
-        text: "预约量",
+        text: "环境容量",
         left: "49%",
         top: "25%",
         textAlign: "center",

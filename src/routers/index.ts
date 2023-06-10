@@ -1,3 +1,11 @@
+/*
+ * @Author: undercurre undercurre@163.com
+ * @Date: 2023-06-07 23:14:13
+ * @LastEditors: undercurre undercurre@163.com
+ * @LastEditTime: 2023-06-10 22:03:13
+ * @FilePath: \homfix\src\routers\index.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { createRouter, createWebHashHistory } from "vue-router";
 import { useUserStore } from "@/stores/modules/user";
 import { useAuthStore } from "@/stores/modules/auth";

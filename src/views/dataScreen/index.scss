@@ -1,12 +1,24 @@
 .dataScreen-container {
+  position: relative;
   width: 100%;
   height: 100%;
-  background: url("./images/bg.png") no-repeat;
+  background-image: url("@/assets/images/dataScreen_bg.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   background-size: 100% 100%;
   background-size: cover;
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; // 控制遮罩层的叠放顺序
+    width: 100%;
+    height: 100%;
+    pointer-events: none; // 避免遮挡元素的交互
+    content: "";
+    background-color: rgb(0 0 0 / 70%); // 设置遮罩层的颜色和透明度
+  }
   .dataScreen {
     position: fixed;
     top: 50%;
@@ -151,7 +163,10 @@
         .dataScreen-map {
           position: relative;
           box-sizing: border-box;
+          display: flex;
           flex: 1;
+          align-items: center;
+          justify-content: center;
           width: 100%;
           margin-top: 78px;
           .dataScreen-map-title {

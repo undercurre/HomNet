@@ -2,15 +2,16 @@
  * @Author: undercurre undercurre@163.com
  * @Date: 2023-06-08 00:45:27
  * @LastEditors: undercurre undercurre@163.com
- * @LastEditTime: 2023-06-08 01:31:34
- * @FilePath: \homfix\src\electron\main.js
+ * @LastEditTime: 2023-06-11 02:20:51
+ * @FilePath: \HomNet\src\electron\main.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 // main.js
 
 // electron 模块可以用来控制应用的生命周期和创建原生浏览窗口
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
+const wifi = require("node-wifi");
 
 const isDev = process.env.IS_DEV == "true" ? true : false;
 
@@ -58,3 +59,32 @@ app.on("window-all-closed", () => {
 
 // 在当前文件中你可以引入所有的主进程代码
 // 也可以拆分成几个文件，然后用 require 导入。
+
+// 监听渲染进程通讯
+ipcMain.on("get-wifi-list", event => {
+  wifi.init({
+    iface: null // 默认接口
+  });
+
+  wifi.scan(async (error, networks) => {
+    if (error) {
+      console.error(error);
+      event.reply("wifi-list", "wifi-list", { success: false, error: error.message });
+      return;
+    }
+
+    let currentNetwork = await wifi.getCurrentConnections();
+    currentNetwork[0].status = "connected";
+    let filteredNetworks = networks.filter(
+      network => network.ssid !== currentNetwork[0].ssid && network.ssid !== currentNetwork[0].bssid
+    );
+    filteredNetworks = filteredNetworks.map(item => {
+      return {
+        ...item,
+        status: "free"
+      };
+    });
+    const curWifiList = [currentNetwork[0], ...filteredNetworks];
+    event.reply("wifi-list", "wifi-list", { success: true, data: curWifiList });
+  });
+});
