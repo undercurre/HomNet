@@ -50,7 +50,9 @@
         </div>
         <div class="dataScreen-ct">
           <div class="dataScreen-map">
-            <div class="dataScreen-map-title">当前环境的网络环境</div>
+            <div class="dataScreen-map-title">
+              当前环境的网络环境 <img class="refresh" src="./images/refresh.png" @click="refreshMethod" />
+            </div>
             <!-- <vue3-seamless-scroll
 							:list="alarmData"
 							class="dataScreen-alarm"
@@ -66,7 +68,7 @@
 							</div>
 						</vue3-seamless-scroll> -->
             <!-- <mapChart ref="MapChartRef" /> -->
-            <radar></radar>
+            <radar ref="radarRef"></radar>
           </div>
           <div class="dataScreen-cb">
             <div class="dataScreen-main-title">
@@ -135,8 +137,17 @@ import RealTimeAccessChart from "./components/RealTimeAccessChart.vue";
 
 const router = useRouter();
 const dataScreenRef = ref<HTMLElement | null>(null);
+const radarRef = ref<InstanceType<typeof radar> | null>(null);
+
+function refreshMethod() {
+  console.log("刷新");
+  if (radarRef.value) {
+    radarRef.value.getWifiList();
+  }
+}
 
 onMounted(() => {
+  refreshMethod();
   // 初始化时为外层盒子加上缩放属性，防止刷新界面时就已经缩放
   if (dataScreenRef.value) {
     dataScreenRef.value.style.transform = `scale(${getScale()}) translate(-50%, -50%)`;

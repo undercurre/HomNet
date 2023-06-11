@@ -2,24 +2,34 @@
  * @Author: undercurre undercurre@163.com
  * @Date: 2023-06-10 03:03:41
  * @LastEditors: undercurre undercurre@163.com
- * @LastEditTime: 2023-06-11 02:24:53
+ * @LastEditTime: 2023-06-11 22:57:14
  * @FilePath: \homfix\src\views\dataScreen\components\radar.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="radar"></div>
   <div class="list_box">
-    <el-radio-group v-model="curWIFI" class="list">
+    <el-radio-group v-model="curWIFI" class="list" @change="wifiChange">
       <el-radio v-for="item in WIFIList" :key="item.mac" :label="item.mac" size="large">{{
         item.ssid.includes("�") ? item.bssid : item.ssid
       }}</el-radio>
     </el-radio-group>
   </div>
+  <el-dialog v-model="dialogVisible" title="wifi密码" width="30%" :before-close="handleClose">
+    <el-input v-model="password" placeholder="Please input" />
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="tap2Cancel">Cancel</el-button>
+        <el-button type="primary" @click="tap2Confirm"> Confirm </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import type { WiFiNetwork } from "node-wifi";
+import { ElMessageBox } from "element-plus";
 
 interface WiFiNetworkWithStatus extends WiFiNetwork {
   status: "connected" | "free";
@@ -28,32 +38,87 @@ interface WiFiNetworkWithStatus extends WiFiNetwork {
 // 当前单选
 const curWIFI = ref("");
 
+// wifi密码
+const preWIFI = ref("");
+const password = ref("");
+
+function tap2Cancel() {
+  curWIFI.value = preWIFI.value;
+  password.value = "";
+  dialogVisible.value = false;
+}
+
+function tap2Confirm() {
+  const curSelect = WIFIList.value.find(item => item.mac === curWIFI.value);
+  if (curSelect) {
+    connectNewWifi(curSelect.ssid, password.value);
+    password.value = "";
+    dialogVisible.value = false;
+  }
+}
+
 // Wifi列表
 const WIFIList = ref<Array<WiFiNetworkWithStatus>>([]);
 
 function getWifiList() {
-  window.api.send("get-wifi-list");
+  if (typeof window.api !== "undefined") {
+    window.api.send("get-wifi-list");
 
-  window.api.on("wifi-list", (event, response) => {
+    window.api.on("wifi-list", (event, response) => {
+      console.log(event, response);
+      if (response.success) {
+        // 处理成功获取到的 WiFi 列表
+        console.log(response.data);
+        WIFIList.value = response.data;
+        if (WIFIList.value[0].status === "connected") {
+          curWIFI.value = WIFIList.value[0].mac || "";
+          preWIFI.value = WIFIList.value[0].mac || "";
+        }
+      } else {
+        // 处理错误情况
+        console.error(response.error);
+      }
+    });
+  } else {
+    console.error("ipcRenderer is not available in this context.");
+  }
+}
+
+function connectNewWifi(ssid: string, password: string) {
+  window.api.send("connect-wifi", { ssid, password });
+  window.api.on("connect-result", (event, response) => {
     console.log(event, response);
     if (response.success) {
-      // 处理成功获取到的 WiFi 列表
+      // 处理成功
+      getWifiList();
       console.log(response.data);
-      WIFIList.value = response.data;
-      if (WIFIList.value[0].status === "connected") curWIFI.value = WIFIList.value[0].mac || "";
     } else {
       // 处理错误情况
+      curWIFI.value = preWIFI.value;
       console.error(response.error);
     }
   });
 }
 
-onMounted(() => {
-  if (typeof window.api !== "undefined") {
-    getWifiList();
-  } else {
-    console.error("ipcRenderer is not available in this context.");
-  }
+function wifiChange() {
+  dialogVisible.value = true;
+}
+
+const dialogVisible = ref(false);
+
+const handleClose = (done: () => void) => {
+  ElMessageBox.confirm("Are you sure to close this dialog?")
+    .then(() => {
+      tap2Cancel();
+      done();
+    })
+    .catch(() => {
+      // catch error
+    });
+};
+
+defineExpose({
+  getWifiList
 });
 </script>
 <style lang="scss" scoped>

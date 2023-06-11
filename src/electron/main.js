@@ -88,3 +88,22 @@ ipcMain.on("get-wifi-list", event => {
     event.reply("wifi-list", "wifi-list", { success: true, data: curWifiList });
   });
 });
+
+ipcMain.on("connect-wifi", (event, data) => {
+  const { ssid, password } = data;
+  console.log(ssid, password);
+  const network = {
+    ssid, // Wi-Fi网络的SSID
+    password // Wi-Fi网络的密码
+  };
+
+  wifi.connect(network, error => {
+    if (error) {
+      console.log(error);
+      event.reply("connect-result", "connect-result", { success: false, error: error.message });
+    } else {
+      console.log("Connected to the Wi-Fi network!");
+      event.reply("connect-result", "connect-result", { success: true, error: "连接成功" });
+    }
+  });
+});

@@ -185,6 +185,12 @@
             letter-spacing: 5px;
             background: url("./images/map-title-bg.png") no-repeat;
             background-size: 100% 100%;
+            .refresh {
+              position: absolute;
+              right: 0;
+              width: 20px;
+              height: 20px;
+            }
           }
           .dataScreen-alarm {
             position: absolute;
