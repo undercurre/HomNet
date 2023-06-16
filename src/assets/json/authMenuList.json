@@ -78,8 +78,8 @@
       "name": "dashboard",
       "redirect": "/dashboard/dataVisualize",
       "meta": {
-        "icon": "Odometer",
-        "title": "Dashboard",
+        "icon": "CopyDocument",
+        "title": "虚拟设备",
         "isLink": "",
         "isHide": false,
         "isFull": false,
@@ -94,6 +94,20 @@
           "meta": {
             "icon": "Menu",
             "title": "数据可视化",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/dashboard/operation",
+          "name": "operation",
+          "component": "/dashboard/operation/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "操作台",
             "isLink": "",
             "isHide": false,
             "isFull": false,
