@@ -52,7 +52,7 @@ import { ElMessage } from "element-plus";
 
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
-  name: "HomNet",
+  name: "Taires",
   phone: "",
   region: "",
   date1: "",

@@ -3,7 +3,7 @@
  * @Date: 2023-06-07 23:14:13
  * @LastEditors: undercurre undercurre@163.com
  * @LastEditTime: 2023-06-08 23:50:27
- * @FilePath: \HomNet\src\layouts\LayoutColumns\index.vue
+ * @FilePath: \Taires\src\layouts\LayoutColumns\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <!-- 分栏布局 -->
@@ -32,7 +32,7 @@
     </div>
     <el-aside :class="{ 'not-aside': !subMenuList.length }" :style="{ width: isCollapse ? '65px' : '210px' }">
       <div class="logo flx-center">
-        <span v-show="subMenuList.length" class="logo-text">{{ isCollapse ? "F" : "HomNet" }}</span>
+        <span v-show="subMenuList.length" class="logo-text">{{ isCollapse ? "F" : "Taires" }}</span>
       </div>
       <el-scrollbar>
         <el-menu

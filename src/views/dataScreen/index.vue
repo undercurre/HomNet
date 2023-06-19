@@ -284,7 +284,7 @@ let platFromData = [
   },
   {
     value: 20,
-    name: "homnet",
+    name: "Taires",
     percentage: "20%"
   },
   {
